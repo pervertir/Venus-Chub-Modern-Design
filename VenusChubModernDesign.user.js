@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Modern Design
 // @namespace    VenusChub
-// @version      v1.2
+// @version      v1.3
 // @description  Moescape-like UI for Venus Tavern.
 // @author       Pervertir
 // @homepageURL  https://github.com/pervertir/Venus-Chub-Modern-Design
@@ -21,9 +21,9 @@
 
     GM_addStyle(`
         .ant-image {
-            border-radius: 50% !important;
+            border-radius: 20% !important;
             overflow: hidden !important;
-            object-fit: cover !important;
+            object-fit: contian !important;
             position: top center;
         }
 
@@ -49,26 +49,6 @@
         antLogo: "#root > div > div > div.ant-layout.sc-dmXWDj.cBaqtx.chat-layout-bigbox.css-4aj7a5 > div.ant-row.ant-row-center.css-4aj7a5 > div > span > div > span"
     };
 
-    async function urlToBase64(url) {
-        return new Promise((resolve, reject) => {
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: url,
-                responseType: 'blob',
-                onload: response => {
-                    if (response.status === 200) {
-                        const blob = response.response;
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(blob);
-                    } else {
-                        reject(new Error(`HTTP error! Status: ${response.status}`));
-                    }
-                },
-                onerror: error => reject(error)
-            });
-        });
-    }
 
     function waitForElement(selector, callback, ...args) {
         console.log(`Waiting for element:`, selector);
@@ -146,21 +126,37 @@
             console.warn("Image URL not provided.");
             return;
         }
-        const imageBase64 = await urlToBase64(imageUrl);
+
+        // Create an <img> element
+        const img = document.createElement('img');
+        img.src = imageUrl; // Set the source of the image
+        img.style.cssText = `
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 10%;
+    `;
+
+        // Apply CSS styles to the div
         div.style.cssText = `
-            background-image: url("data:image;base64,${imageBase64}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: top center;
-            width: 90vw;
-            height: 90vh;
-            top: 7vh;
-            left: 5vw;
-            z-index: 9;
-            overflow: hidden;
-            border-radius: 50%;
-        `;
+        position: relative;
+        width: 90vw;
+        height: 90vh;
+        top: 7vh;
+        left: 5vw;
+        z-index: 9;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+        // Clear any existing content and add the <img> element to the div
+        div.innerHTML = '';
+        div.appendChild(img);
     }
+
+
 
     async function getBgURL(div) {
         const style = div.style.backgroundImage;
