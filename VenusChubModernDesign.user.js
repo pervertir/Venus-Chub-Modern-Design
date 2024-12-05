@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chub AI Modern Design
 // @namespace    VenusChub
-// @version      v1.3
+// @version      v1.4
 // @description  Moescape-like UI for Venus Tavern.
 // @author       Pervertir
 // @homepageURL  https://github.com/pervertir/Venus-Chub-Modern-Design
