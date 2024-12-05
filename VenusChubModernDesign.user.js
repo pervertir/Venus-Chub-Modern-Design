@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Modern Design
+// @name         Chub AI Modern Design
 // @namespace    VenusChub
 // @version      v1.3
 // @description  Moescape-like UI for Venus Tavern.
