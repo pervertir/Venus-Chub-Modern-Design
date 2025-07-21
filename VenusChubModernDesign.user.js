@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Chub AI Modern Design
 // @namespace    VenusChub
-// @version      v1.4
+// @version      v1.5
 // @description  Moescape-like UI for Venus Tavern.
 // @author       Pervertir
 // @homepageURL  https://github.com/pervertir/Venus-Chub-Modern-Design
@@ -21,10 +21,11 @@
 
     GM_addStyle(`
         .ant-image {
-            border-radius: 20% !important;
+            border-radius: 1.5rem !important;
             overflow: hidden !important;
             object-fit: contian !important;
             position: top center;
+            width:90%;
         }
 
         .ant-list-item-meta {
@@ -33,14 +34,14 @@
         }
 
         .ant-list-item {
-            border-radius: 0.5rem !important;
+            border-radius: 1.5rem !important;
             margin-top: 0.8rem !important;
         }
     `);
 
     const selectors = {
-        bgImage: "#root > div > div > div.ant-layout.sc-khjJXk.dLQnlF.chat-layout-bigbox.css-4aj7a5 > div:nth-child(1)",
-        inputHolder: "form > div.d-flex.align-center",
+        bgImage: "div.abs-100-dvh > div.ant-layout.sc-lnsjTu.jiGIKv.chat-layout-bigbox.css-1qdghb2 > div.abs-100-dvh",
+        inputHolder: "div.chat-input-container",
         messageInput: "textarea.ant-input",
         chatArea: "div.no-scrollbar .ant-col-xs-24.ant-col-md-24.ant-col-lg-24",
         blankSpace: "div.ant-col-lg-5",
@@ -68,11 +69,10 @@
         textarea.setAttribute('placeholder', 'Message...');
         textarea.style.cssText = `
             font-size: 0.9rem;
-            width: 30vw;
             height: 32px;
-            max-height: 128px;
-            line-height: 1.4rem;
-            margin: 0.05rem;
+            line-height: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom:1rem;
             border-radius: 1.5rem;
             overflow: hidden;
         `;
@@ -119,6 +119,14 @@
 
     function centerInput(div) {
         div.classList.add('justify-center');
+        div.style.cssText = `
+        margin-top:1rem;
+        margin-bottom:1rem;
+        `;
+        if (div.firstElementChild) {
+            div.firstElementChild.style.width = '80%';
+        }
+
     }
 
     async function addCharacterImage(div, imageUrl) {
@@ -131,17 +139,15 @@
         const img = document.createElement('img');
         img.src = imageUrl; // Set the source of the image
         img.style.cssText = `
-        width: auto;
-        height: 100%;
         object-fit: contain;
-        border-radius: 10%;
+        border-radius: 1.5rem;
     `;
 
         // Apply CSS styles to the div
         div.style.cssText = `
         position: relative;
-        width: 90vw;
         height: 90vh;
+        border-radius:1.5rem;
         top: 7vh;
         left: 5vw;
         z-index: 9;
